@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)http://192.168.1.43:8000/showvideo.html -->
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<title>情感日历</title>
+		<script type="text/javascript" src="./test_files/stats" charset="UTF-8"></script>
+		<link rel="stylesheet" href="./test_files/frozen.css">
+		<link rel="stylesheet" href="./test_files/demo.css">
+		<script src="./test_files/zepto.min.js.下载"></script>
+		<script src="./test_files/frozen.js.下载"></script>
+		<script src="./test_files/vue.js.下载"></script>
+	</head>
+
+	<body ontouchstart="">
+		<!--<header class="ui-header ui-header-positive ui-border-b" id="slidertitle">
+			<i class="ui-icon-return" onclick="history.back()"></i>
+			<h1>{{ selectname }}</h1>
+		</header>-->
+
+		<section class="ui-container">
+
+			<section id="slider">
+				<div class="demo-item">
+
+					<div class="demo-block">
+
+						<video id="myvideo" width="100%" height="100%" webkit-playsinline="true" autobuffer="" style="
+    position: absolute;
+    z-index: -1;
+    visibility: hidden;
+">
+							<source src="http://192.168.1.43:8000/1.3.mp4" type="video/mp4">
+						</video>
+
+						<canvas id="myCanvas" style="
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    width:100%;
+    height:'568px';
+    z-index: 9999;" height="152" width="304">       
+</canvas>
+
+					</div>
+
+				</div>
+			</section>
+
+		</section>
+		<!-- /.ui-container-->
+		<!--<script>
+			$('.ui-list li,.ui-tiled li').click(function() {
+				if($(this).data('href')) {
+					location.href = $(this).data('href');
+				}
+			});
+			$('.ui-header .ui-btn').click(function() {
+				location.href = 'index.html';
+			});
+		</script>-->
+
+		<script>
+			var fps = 1000 / 30;
+			var myvideo = document.getElementById("myvideo");
+			//var myvideo1 = document.getElementById("myvideo1");
+			var myCanvas = document.getElementById("myCanvas");
+
+			var touchpos = 0;
+
+			var ctx = myCanvas.getContext('2d');
+//			var width = myCanvas.width,
+//				height = myCanvas.height;
+			
+			myvideo.addEventListener('play', function() {
+
+				var height = this.clientHeight;
+				var width = this.clientWidth;
+//				myCanvas.setAttribute('height', Math.floor(this.clientHeight));
+//				myCanvas.setAttribute('width', Math.floor(this.clientWidth));
+				if(window.devicePixelRatio) {
+				myCanvas.style.width = width + "px";
+				myCanvas.style.height = window.document.innerHeight + "px";
+				myCanvas.height = height * window.devicePixelRatio;
+				myCanvas.width = width * window.devicePixelRatio;
+				ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+			}
+				var i = window.setInterval(function() {
+					//if(touchpos == 1)
+					ctx.drawImage(myvideo, 0, 0, width, height);
+					//else
+					//   ctx.drawImage(myvideo1,0,0,width,height);
+				}, fps);
+			}, true);
+
+			myCanvas.addEventListener('touchstart', function(evt) {
+				var event = evt || window.event;
+				evt.preventDefault();
+				var message = "Touch started (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";
+				touchpos = 1;
+				//writeMessage(myCanvas, message);
+			}, false);
+
+			myvideo.play();
+			//myvideo1.play();
+		</script>
+
+	</body>
+
+</html>
